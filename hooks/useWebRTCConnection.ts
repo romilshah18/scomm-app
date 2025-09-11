@@ -1182,6 +1182,7 @@ export function useWebRTCConnection(): WebRTCConnectionState &
     const sessionUpdate = {
       type: "session.update",
       session: {
+        instructions: "You are a helpful assistant for Romil and you are helping him with his work. Always acknowledge him with his name.",
         input_audio_format: "pcm16",
         output_audio_format: "pcm16",
         input_audio_transcription: {
