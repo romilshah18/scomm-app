@@ -8,6 +8,7 @@ import {
   mediaDevices,
 } from "react-native-webrtc";
 import { TranscriptItem } from "./useTranscript";
+import { AudioManager } from "./useInCallManager";
 
 // Error classification for better error handling
 export type ErrorSeverity = "warning" | "error" | "fatal";
@@ -961,6 +962,7 @@ export function useWebRTCConnection(): WebRTCConnectionState &
 
   // Start WebRTC session
   const startSession = useCallback(async () => {
+    console.log("Starting session");
     if (refs.current.peerConnection) {
       logger.warn(
         "Existing RTCPeerConnection detected; closing before starting a new session"
@@ -982,6 +984,10 @@ export function useWebRTCConnection(): WebRTCConnectionState &
 
     try {
       setState((prev) => ({ ...prev, isConnecting: true, error: null }));
+
+      // Configure audio for loud speaker
+      AudioManager.setLoudSpeaker();
+      AudioManager.startAudioSession();
 
       // Request permissions
       const hasPermission = await requestPermissions();
@@ -1059,8 +1065,12 @@ export function useWebRTCConnection(): WebRTCConnectionState &
 
   // Stop WebRTC session
   const stopSession = useCallback(async () => {
+    console.log("Stopping session");
     try {
       logger.info("Stopping WebRTC session");
+
+      // Stop audio session
+      AudioManager.stopAudioSession();
 
       // Stop conversation and audio monitoring
       refs.current.isResponseInProgress = false;
@@ -1182,7 +1192,8 @@ export function useWebRTCConnection(): WebRTCConnectionState &
     const sessionUpdate = {
       type: "session.update",
       session: {
-        instructions: "You are a helpful assistant for Romil and you are helping him with his work. Always acknowledge him with his name.",
+        instructions:
+          "You are a helpful assistant for Romil and you are helping him with his work. Always acknowledge him with his name.",
         input_audio_format: "pcm16",
         output_audio_format: "pcm16",
         input_audio_transcription: {
