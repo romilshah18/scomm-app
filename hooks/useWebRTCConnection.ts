@@ -7,8 +7,8 @@ import {
   RTCPeerConnection,
   mediaDevices,
 } from "react-native-webrtc";
-import { TranscriptItem } from "./useTranscript";
 import { AudioManager } from "./useInCallManager";
+import { TranscriptItem } from "./useTranscript";
 
 // Error classification for better error handling
 export type ErrorSeverity = "warning" | "error" | "fatal";

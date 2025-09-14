@@ -1,4 +1,4 @@
-import InCallManager from 'react-native-incall-manager';
+import InCallManager from "react-native-incall-manager";
 
 // Simple utility functions for audio routing
 export const AudioManager = {
@@ -6,15 +6,15 @@ export const AudioManager = {
     try {
       InCallManager.setForceSpeakerphoneOn(true);
     } catch (error) {
-      console.error('Error setting loud speaker:', error);
+      console.error("Error setting loud speaker:", error);
     }
   },
 
   startAudioSession: () => {
     try {
-      InCallManager.start({ media: 'audio' });
+      InCallManager.start({ media: "audio" });
     } catch (error) {
-      console.error('Error starting audio session:', error);
+      console.error("Error starting audio session:", error);
     }
   },
 
@@ -22,7 +22,7 @@ export const AudioManager = {
     try {
       InCallManager.stop();
     } catch (error) {
-      console.error('Error stopping audio session:', error);
+      console.error("Error stopping audio session:", error);
     }
-  }
+  },
 };
